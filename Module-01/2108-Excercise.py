@@ -1,0 +1,5 @@
+print("Hello!")
+print(12+43)
+print("12+43")
+name = input("what is your name?")
+print(name)
