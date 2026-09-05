@@ -9,7 +9,7 @@ else:
 
 #Excercise 2
 
-cabin_class = input("Enter the cabin class: ")
+cabin_class = input("Enter the cabin class: ").upper()
 if cabin_class == "LUX":
     print("LUX: upper-deck cabin with a balcony")
 elif cabin_class == "A":
