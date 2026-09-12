@@ -75,3 +75,5 @@ while number <= N_point:
         n_point += 1
     number += 1
 print (f" value of pi: {4*n_point/N_point}")
+
+
