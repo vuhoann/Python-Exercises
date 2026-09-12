@@ -10,3 +10,7 @@ I completed the excercises in module 4
 I completed the excercises in module 5
 ## Module 6:
 I completed the excercises in module 6
+## Module 7:
+I completed the excercises in module 7
+## Module 8:
+I completed the excercises in module 8
