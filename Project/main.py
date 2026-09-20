@@ -1,70 +1,23 @@
-list_item = []
-def add():
-    item = input("Add an item: 1. Weapon, 2. Armor, 3. Potion, 4. Accessory ")
-    if item == "1":
-        list_item.append("Weapon")
-        print("Item added successfully!")
-    elif item == "2":
-        list_item.append("Armor")
-        print("Item added successfully!")
-    elif item == "3":
-        list_item.append("Potion")
-        print("Item added successfully!")
-    elif item == "4":
-        list_item.append("Accessory")
-        print("Item added successfully!")
-    else:
-        print("Invalid item")
 
-def show():
-    print(f"Items list:\n {list_item}")
+from gameclasses import Player, Item, Room
 
-def remove():
-    remove_item = input("Enter an item to remove: 1. Weapon, 2. Armor, 3. Potion, 4. Accessory ")
-    if remove_item == "1":
-        if "Weapon" not in list_item:
-            print("This item does not exist")
-        else:
-            list_item.remove("Weapon")
-            print("Item removed successfully!")
-    elif remove_item == "2":
-        if "Armor" not in list_item:
-            print("This item does not exist")
-        else:
-            list_item.remove("Armor")
-            print("Item removed successfully!")
-    elif remove_item == "3":
-        if "Potion" not in list_item:
-            print("This item does not exist")
-        else:
-            list_item.remove("Potion")
-            print("Item removed successfully!")
-    elif remove_item == "4":
-        if "Accessory" not in list_item:
-            print("This item does not exist")
-        else:
-            list_item.remove("Accessory")
-            print("Item removed successfully!")
+def move():
+    print("---------------------")
+    room = input("Choose a room: \n1. Great_Hall \n2. Chamber \n3. Dungeon \n4. Armoury \n5. Chapel \n")
+    if room == "1":
+        player.move(room_1)
+    elif room == "2":
+        player.move(room_2)
+    elif room == "3":
+        player.move(room_3)
+    elif room == "4":
+        player.move(room_4)
+    elif room == "5":
+        player.move(room_5)
     else:
-        print("Invalid item")
+        print("Invalid room")
 
-def check():
-    item = input("Choose an item: 1. Weapon, 2. Armor, 3. Potion, 4. Accessory ")
-    if item == "1":
-        list_item.count("Weapon")
-        print(f"Weapon: {list_item.count("Weapon")}")
-    elif item == "2":
-        list_item.count("Armor")
-        print(f"Armor: {list_item.count("Armor")}")
-    elif item == "3":
-        list_item.count("Potion")
-        print(f"Potion: {list_item.count("Potion")}")
-    elif item == "4":
-        list_item.count("Accessory")
-        print(f"Accessory: {list_item.count("Accessory")}")
-    else:
-        print("Invalid item")
-    
+
 
 name = input("What is your name? ")
 age = int(input("How old are you? "))
@@ -72,24 +25,44 @@ print ( "The player's name is: "+ name +"\nThe player's age is: "+ str(age))
 if age < 12:
     print("You do not meet the minimum age requirement")
 else:
-    print("---------------------")
-    print("*** Hello and welcome "+ name+" ***")
+    print("--------------------------")
+    print("*** Hello and welcome "+ name +" ***")
+    item_1 = Item("Weapon",3)
+    item_2 = Item("Armor",5)
+    item_3 = Item("Potion",1)
+    item_4 = Item("Ring",2)
+    room_1 = Room("Great_Hall",item_4)
+    room_2 = Room("Chamber")
+    room_3 = Room("Dungeon",item_2)
+    room_4 = Room("Armoury",item_1)
+    room_5 = Room("Chapel",item_3)
+    player = Player(name,room_1)
     while True:
         print("---------------------")
-        print("----- Main Menu -----\n1. Add new item \n2. Show existing items \n3. Remove item \n4. Check amount item \n5. Quit ")
+        print(f"Player: {player.name}")
+        print(f"Current location: {player.location.name}")
+        if player.location.item == "":
+            print(f"No item in room")
+        else:
+            print(f"Item in room: {player.location.item.name}")
+        print("---------------------\n1. Collect an item \n2. Move to another room \n3. Show Your Inventory \n4. Quit ")
         command = input("Enter a command (1-4): ")
         if command == "lopeta":
-            print("bye bye")
+            print("Bye bye")
             break
         elif command == "1":
-            add()
+            player.collect_item()
         elif command == "2":
-            show()
+            move()
         elif command == "3":
-            remove()
+            print("---------------------")
+            if player.items != []:
+                print("Your inventory: ")
+                for item in player.items:
+                    print(item)
+            else:
+                print("Your inventory is empty")
         elif command == "4":
-            check()            
-        elif command == "5":
             print("Enter lopeta in command")
         else:
             print("Invalid command")
