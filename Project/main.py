@@ -1,68 +1,174 @@
+from classes.player import Player
+from classes.item import Item
+from classes.room import Room
+import os
 
-from gameclasses import Player, Item, Room
-
-def move():
-    print("---------------------")
-    room = input("Choose a room: \n1. Great_Hall \n2. Chamber \n3. Dungeon \n4. Armoury \n5. Chapel \n")
-    if room == "1":
-        player.move(room_1)
-    elif room == "2":
-        player.move(room_2)
-    elif room == "3":
-        player.move(room_3)
-    elif room == "4":
-        player.move(room_4)
-    elif room == "5":
-        player.move(room_5)
+# moves
+def move(direction):
+    clear()
+    if direction in player.location.location:
+        print(f"You move {direction} to {player.location.location[direction].name}")
+        player.move(player.location.location[direction])
     else:
-        print("Invalid room")
+        print("You can't go that way")
 
+# display staring menu
+def start():
+    print(f"\n\n\t\tHello and welcome {name}\n\n"
+          "\tYou must collect all seven Dragon Balls\n\n"
+          "Moves: \tgo {direction} (travel north, south, east or west)\n"
+          "\t collect: (add Dragon Ball to your inventory)\n\n ")
+    input("Press enter to continue.....")
 
+# clear terminal
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
 
+# show inventory
+def show_inventory():
+    if player.items != []:
+        print("Your inventory: ")
+        for item in sorted(player.items, key = lambda x: x.name):
+            print(item)
+    else:
+        print("Your inventory is empty")   
+        
+# show item in room
+def show_item():
+    if player.location.item == "":
+        print(f"No Dragon Ball here")
+    else:
+        print(f"Item in room: {player.location.item.name}")
+
+# show life
+def show_life():
+    print(f"Your life: {player.life}")
+
+# check win game
+def win():
+    if len(player.items) == 7:
+        clear()
+        print("Congratulation! You won - let make a wish")
+        return True
+    else:
+        return False
+
+# check lose game
+def lose():
+    if player.life <= 0:
+        clear()
+        print("Game over")
+        return True
+    else: 
+        return False
+
+# main code
 name = input("What is your name? ")
 age = int(input("How old are you? "))
-print ( "The player's name is: "+ name +"\nThe player's age is: "+ str(age))
 if age < 12:
+    clear()
     print("You do not meet the minimum age requirement")
 else:
-    print("--------------------------")
-    print("*** Hello and welcome "+ name +" ***")
-    item_1 = Item("Weapon",3)
-    item_2 = Item("Armor",5)
-    item_3 = Item("Potion",1)
-    item_4 = Item("Ring",2)
-    room_1 = Room("Great_Hall",item_4)
-    room_2 = Room("Chamber")
-    room_3 = Room("Dungeon",item_2)
-    room_4 = Room("Armoury",item_1)
-    room_5 = Room("Chapel",item_3)
+    clear()
+    start()
+    # create item
+    item_1 = Item("Dradon Ball number 1",2)
+    item_2 = Item("Dradon Ball number 2",5)
+    item_3 = Item("Dradon Ball number 3",2)
+    item_4 = Item("Dradon Ball number 4",4)
+    item_5 = Item("Dradon Ball number 5",3)
+    item_6 = Item("Dradon Ball number 6",3)
+    item_7 = Item("Dradon Ball number 7",2)
+    # create rooms
+    room_1 = Room("Kame House")
+    room_2 = Room("Frypan Mountain")
+    room_3 = Room("Papaya Island",item_4)
+    room_4 = Room("Satan City")
+    room_5 = Room("East Capital",item_6)
+    room_6 = Room("Jingeru Village")
+    room_7 = Room("Muscle Tower",item_5)
+    room_8 = Room("North Capital")
+    room_9 = Room("Pilaf castle")
+    room_10 = Room("Baseru City",item_1)
+    room_11 = Room("Central Capital")
+    room_12 = Room("Ginger Town")
+    room_13 = Room("Yunzabit Heights",item_2)
+    room_14 = Room("Karin's Holy Ground")
+    room_15 = Room("Red Ribbon Army HQ",item_3)
+    room_16 = Room("Nama Village",item_7)
+    # add direction
+    room_1.add_direction("west",room_2)
+    room_1.add_direction("north",room_4)
+    room_2.add_direction("east",room_1)
+    room_2.add_direction("south",room_3)
+    room_2.add_direction("north",room_9)
+    room_3.add_direction("north",room_2)
+    room_4.add_direction("south",room_1)
+    room_4.add_direction("east",room_5)
+    room_4.add_direction("north",room_6)
+    room_4.add_direction("west",room_9)
+    room_5.add_direction("west",room_4)
+    room_6.add_direction("south",room_4)
+    room_6.add_direction("north",room_7)
+    room_6.add_direction("west",room_8)
+    room_7.add_direction("south",room_6)
+    room_8.add_direction("east",room_6)
+    room_8.add_direction("west",room_13)
+    room_8.add_direction("south",room_11)
+    room_9.add_direction("north",room_11)
+    room_9.add_direction("west",room_10)
+    room_9.add_direction("south",room_2)
+    room_10.add_direction("east",room_9)
+    room_10.add_direction("west",room_15)
+    room_11.add_direction("south",room_9)
+    room_11.add_direction("west",room_12)
+    room_11.add_direction("north",room_8)
+    room_12.add_direction("east",room_11)
+    room_12.add_direction("north",room_13)
+    room_12.add_direction("west",room_14)
+    room_13.add_direction("south",room_12)
+    room_13.add_direction("east",room_8)
+    room_14.add_direction("east",room_12)
+    room_14.add_direction("south",room_15)
+    room_15.add_direction("north",room_14)
+    room_15.add_direction("east",room_10)
+    room_15.add_direction("south",room_16)
+    room_16.add_direction("north",room_15)
+    # Create player
     player = Player(name,room_1)
+
+    # main game loop
     while True:
-        print("---------------------")
+        # check win lose
+        if win():
+            break
+        if lose():
+            break
+        # main menu
+        print("--------------------------")
         print(f"Player: {player.name}")
         print(f"Current location: {player.location.name}")
-        if player.location.item == "":
-            print(f"No item in room")
-        else:
-            print(f"Item in room: {player.location.item.name}")
-        print("---------------------\n1. Collect an item \n2. Move to another room \n3. Show Your Inventory \n4. Quit ")
-        command = input("Enter a command (1-4): ")
+        show_inventory()
+        show_item()
+        show_life()
+        print("--------------------------\n1. Collect \t2. Go North \n3. Go South \t4. Go West \n5. Go East \t6. Quit ")
+        command = input("Enter a command (1-6): ")
         if command == "lopeta":
             print("Bye bye")
             break
         elif command == "1":
+            clear()
             player.collect_item()
         elif command == "2":
-            move()
+            move("north")
         elif command == "3":
-            print("---------------------")
-            if player.items != []:
-                print("Your inventory: ")
-                for item in player.items:
-                    print(item)
-            else:
-                print("Your inventory is empty")
+            move("south")
         elif command == "4":
+            move("west")
+        elif command == "5":
+             move("east")
+        elif command == "6":
+            clear()
             print("Enter lopeta in command")
         else:
             print("Invalid command")

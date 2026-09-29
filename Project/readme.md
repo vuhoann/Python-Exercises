@@ -22,3 +22,11 @@ Nguyen Vu Hoang
 -When the program starts, a player and a few items(weapon, armor, potion, ring) and rooms(great_hall, chamber, dungeon, armoury, chapel) are created. All rooms contain an item except the chamber room. The player starts in the great hall.
 +When the player collects an item in the room, the item will be removed from the room. 
 +When the player chooses to move to another room, a room selection menu is displayed by the move function.
+
+** WIP
+29-09
+The game idea now is inspired by Dragon Ball: you have to collect all 7 Dragon Balls to win the game. You will start with 10 life points and every time you move to another room, you randomly gain or lose between -3 to 1 life points (facing enemies or finding food). Additionally, when you collecte a Dragon Ball, you receive 2-5 life points. When your life reaches 0 you lose the game.
+
+I updated the main menu and create some new rooms and new items to fit the game idea. I also changed how rooms work: now player can no longer see the rooms and can only choose to move north, south, west or east
+I added several functions to make my program cleaner, such as clear (to clear terminal), start (to print information when the game starts), move (to move another room), check win/lose, show life, show inventory ... 
+I also modified the move and collect item method in the player class to work with the life system

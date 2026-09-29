@@ -18,3 +18,5 @@ I completed the excercises in module 8
 I completed the excercises in module 9
 ## Module 10:
 I completed the excercises in module 10
+## Module 11:
+I completed the excercises in module 11
