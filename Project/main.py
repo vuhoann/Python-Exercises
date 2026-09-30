@@ -2,19 +2,23 @@ from classes.player import Player
 from classes.item import Item
 from classes.room import Room
 import os
+# change text color using the colorama library
+from colorama import Fore, Back, Style, init
+# initialize colorama
+init(autoreset=True)
 
 # moves
 def move(direction):
     clear()
     if direction in player.location.location:
-        print(f"You move {direction} to {player.location.location[direction].name}")
+        print(Fore.GREEN + f"You move {direction} to {player.location.location[direction].name}")
         player.move(player.location.location[direction])
     else:
-        print("You can't go that way")
+        print(Fore.RED + "You can't go that way")
 
 # display staring menu
 def start():
-    print(f"\n\n\t\tHello and welcome {name}\n\n"
+    print(Fore.CYAN + Style.BRIGHT + f"\n\n\t\tHello and welcome {name}\n\n"
           "\tYou must collect all seven Dragon Balls\n\n"
           "Moves: \tgo {direction} (travel north, south, east or west)\n"
           "\t collect: (add Dragon Ball to your inventory)\n\n ")
@@ -29,7 +33,7 @@ def show_inventory():
     if player.items != []:
         print("Your inventory: ")
         for item in sorted(player.items, key = lambda x: x.name):
-            print(item)
+            print(Fore.YELLOW + f"{item}")
     else:
         print("Your inventory is empty")   
         
@@ -38,17 +42,13 @@ def show_item():
     if player.location.item == "":
         print(f"No Dragon Ball here")
     else:
-        print(f"Item in room: {player.location.item.name}")
-
-# show life
-def show_life():
-    print(f"Your life: {player.life}")
+        print("Item in room:" + Fore.LIGHTYELLOW_EX + Style.BRIGHT + f"{player.location.item.name}")
 
 # check win game
 def win():
     if len(player.items) == 7:
         clear()
-        print("Congratulation! You won - let make a wish")
+        print(Style.BRIGHT + Fore.YELLOW + "\n\n\t\tCongratulation! You won - let make a wish")
         return True
     else:
         return False
@@ -57,7 +57,7 @@ def win():
 def lose():
     if player.life <= 0:
         clear()
-        print("Game over")
+        print(Style.BRIGHT + Fore.RED + "\n\n\t\tGame over")
         return True
     else: 
         return False
@@ -117,6 +117,7 @@ else:
     room_8.add_direction("south",room_11)
     room_9.add_direction("north",room_11)
     room_9.add_direction("west",room_10)
+    room_9.add_direction("east",room_4)
     room_9.add_direction("south",room_2)
     room_10.add_direction("east",room_9)
     room_10.add_direction("west",room_15)
@@ -146,11 +147,11 @@ else:
             break
         # main menu
         print("--------------------------")
-        print(f"Player: {player.name}")
-        print(f"Current location: {player.location.name}")
+        print("Player:" + Fore.LIGHTBLUE_EX + f"{player.name}")
+        print("Current location:" + Fore.LIGHTBLUE_EX + f"{player.location.name}")
         show_inventory()
         show_item()
-        show_life()
+        print(f"Your life:" + Fore.RED + f" {player.life}")
         print("--------------------------\n1. Collect \t2. Go North \n3. Go South \t4. Go West \n5. Go East \t6. Quit ")
         command = input("Enter a command (1-6): ")
         if command == "lopeta":
