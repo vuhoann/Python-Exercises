@@ -32,3 +32,5 @@ class Player:
             self.location.item = ""
         else:
             print(Fore.LIGHTRED_EX + "No items collected")
+        input("\nPress enter to continue.....")
+        

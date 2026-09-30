@@ -15,6 +15,8 @@ def move(direction):
         player.move(player.location.location[direction])
     else:
         print(Fore.RED + "You can't go that way")
+    input("\nPress enter to continue.....")
+    clear()
 
 # display staring menu
 def start():
@@ -23,6 +25,7 @@ def start():
           "Moves: \tgo {direction} (travel north, south, east or west)\n"
           "\t collect: (add Dragon Ball to your inventory)\n\n ")
     input("Press enter to continue.....")
+    clear()
 
 # clear terminal
 def clear():
@@ -160,6 +163,7 @@ else:
         elif command == "1":
             clear()
             player.collect_item()
+            clear()
         elif command == "2":
             move("north")
         elif command == "3":
@@ -172,5 +176,6 @@ else:
             clear()
             print("Enter lopeta in command")
         else:
-            print("Invalid command")
+            clear()
+            print(Fore.RED + "Invalid command")
 
