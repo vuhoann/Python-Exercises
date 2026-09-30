@@ -7,16 +7,6 @@ from colorama import Fore, Back, Style, init
 # initialize colorama
 init(autoreset=True)
 
-# moves
-def move(direction):
-    clear()
-    if direction in player.location.location:
-        print(Fore.GREEN + f"You move {direction} to {player.location.location[direction].name}")
-        player.move(player.location.location[direction])
-    else:
-        print(Fore.RED + "You can't go that way")
-    input("\nPress enter to continue.....")
-    clear()
 
 # display staring menu
 def start():
@@ -30,6 +20,17 @@ def start():
 # clear terminal
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
+
+# moves
+def move(direction):
+    clear()
+    if direction in player.location.location:
+        print(Fore.GREEN + f"You move {direction} to {player.location.location[direction].name}")
+        player.move(player.location.location[direction])
+    else:
+        print(Fore.RED + "You can't go that way")
+    input("\nPress enter to continue.....")
+    clear()
 
 # show inventory
 def show_inventory():
@@ -100,43 +101,21 @@ else:
     room_15 = Room("Red Ribbon Army HQ",item_3)
     room_16 = Room("Nama Village",item_7)
     # add direction
-    room_1.add_direction("west",room_2)
-    room_1.add_direction("north",room_4)
-    room_2.add_direction("east",room_1)
-    room_2.add_direction("south",room_3)
-    room_2.add_direction("north",room_9)
+    room_1.add_direction("west",room_2,"north",room_4)
+    room_2.add_direction("east",room_1,"south",room_3,"north",room_9)
     room_3.add_direction("north",room_2)
-    room_4.add_direction("south",room_1)
-    room_4.add_direction("east",room_5)
-    room_4.add_direction("north",room_6)
-    room_4.add_direction("west",room_9)
+    room_4.add_direction("south",room_1,"east",room_5,"north",room_6,"west",room_9)
     room_5.add_direction("west",room_4)
-    room_6.add_direction("south",room_4)
-    room_6.add_direction("north",room_7)
-    room_6.add_direction("west",room_8)
+    room_6.add_direction("south",room_4,"north",room_7,"west",room_8)
     room_7.add_direction("south",room_6)
-    room_8.add_direction("east",room_6)
-    room_8.add_direction("west",room_13)
-    room_8.add_direction("south",room_11)
-    room_9.add_direction("north",room_11)
-    room_9.add_direction("west",room_10)
-    room_9.add_direction("east",room_4)
-    room_9.add_direction("south",room_2)
-    room_10.add_direction("east",room_9)
-    room_10.add_direction("west",room_15)
-    room_11.add_direction("south",room_9)
-    room_11.add_direction("west",room_12)
-    room_11.add_direction("north",room_8)
-    room_12.add_direction("east",room_11)
-    room_12.add_direction("north",room_13)
-    room_12.add_direction("west",room_14)
-    room_13.add_direction("south",room_12)
-    room_13.add_direction("east",room_8)
-    room_14.add_direction("east",room_12)
-    room_14.add_direction("south",room_15)
-    room_15.add_direction("north",room_14)
-    room_15.add_direction("east",room_10)
-    room_15.add_direction("south",room_16)
+    room_8.add_direction("east",room_6,"west",room_13,"south",room_11)
+    room_9.add_direction("north",room_11,"west",room_10,"east",room_4,"south",room_2)
+    room_10.add_direction("east",room_9,"west",room_15)
+    room_11.add_direction("south",room_9,"west",room_12,"north",room_8)
+    room_12.add_direction("east",room_11,"north",room_13,"west",room_14)
+    room_13.add_direction("south",room_12,"east",room_8)
+    room_14.add_direction("east",room_12,"south",room_15)
+    room_15.add_direction("north",room_14,"east",room_10,"south",room_16)
     room_16.add_direction("north",room_15)
     # Create player
     player = Player(name,room_1)
