@@ -1,32 +1,37 @@
-# Name of the game
+# Dragon Ball 
 Nguyen Vu Hoang
 
-30-08: Project assignment 1
--Create a folder project for the game. 
--Create a program that asks for the player's name and age.
+---
+## Game idea
 
-06-09: Project assignment 2
--Updated the program to check age requirements: if the user's age is under 12, the program informs them that they do not meet the minimum age requirement. Otherwise, the program greets the user and displays the main menu.
--Create a loop menu and add a few commands. After a command, display the menu again until the user enters "lopeta".
+This game idea is inspired by Dragon Ball.
+There are 7 Dragon Balls (DB) in different locations, and the player has to find and collect all 7 DB to win.
+The gameplay has the following flow:
+In the beginning, the player has 3 lives, each life has 10 HP, the player starts in Kame House.
+The player can choose go north, south, west or east. Everytime he/she moves to another location, he/she randomly gains or loses between -3 and +1 his/her HP (facing enemies or finding food). When the player goes to the location that has DB, he/she can see and choose to collecte it. When s DB is collected, the player receives 1-4 HP (permanently added until the game is over) 
+When HP = 0, the player dies (loses 1 life) and return to the starting location (Kame House), but his/her inventory does not change. Afer 3 lives are lost, the game is over.
 
-13-09: Project assignment 3
--Modify the main menu, now the user can add items (they can select a weapon, armor, potion or accessory), print the items list, remove an item or check items amount .
--Create a function for each main menu option: add, show, remove and check function.
+---
+## Structure
 
-20-09: Project assignment 4
--Create new classes in gameclasses.py file.
-+Class Player includes player name, list of items and their current location. Class player also includes move and collect item method.
-+Class Item includes its name and weight.
-+Class Room includes its name and possibly an item.
--Updated the main menu loop, allowing the player to collect an item in the current room, move to another room, check their inventory or quit. 
--When the program starts, a player and a few items(weapon, armor, potion, ring) and rooms(great_hall, chamber, dungeon, armoury, chapel) are created. All rooms contain an item except the chamber room. The player starts in the great hall.
-+When the player collects an item in the room, the item will be removed from the room. 
-+When the player chooses to move to another room, a room selection menu is displayed by the move function.
+The project is split into separate modules:
 
-** WIP
-29-09
-The game idea now is inspired by Dragon Ball: you have to collect all 7 Dragon Balls to win the game. You will start with 10 life points and every time you move to another room, you randomly gain or lose between -3 to 1 life points (facing enemies or finding food). Additionally, when you collecte a Dragon Ball, you receive 2-5 life points. When your life reaches 0 you lose the game.
+project/
+|__main.py                  # maincode: game loop , functions
+|__classes/
+|          |__player.py     # Player class
+|          |__item.py       # Item class
+|          |__room.py       # Room class
+|__readme.md                # Documentation
+|__file_handling.py         # To handle the game save/ load
+|__save.json                # Write/store the players information
 
-I updated the main menu and create some new rooms and new items to fit the game idea. I also changed how rooms work: now player can no longer see the rooms and can only choose to move north, south, west or east
-I added several functions to make my program cleaner, such as clear (to clear terminal), start (to print information when the game starts), move (to move another room), check win/lose, show life, show inventory ... 
-I also modified the move and collect item method in the player class to work with the life system
+---
+## Player actions
+collect - collect DB if the player see it
+go north/ south/ west or east - move to a different location to find DB
+quit - enter lopeta to quit the game
+
+
+
+

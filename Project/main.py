@@ -1,6 +1,7 @@
 from classes.player import Player
 from classes.item import Item
 from classes.room import Room
+from file_handling import (save_game, load_game)
 import os
 # change text color using the colorama library
 from colorama import Fore, Back, Style, init
@@ -8,12 +9,13 @@ from colorama import Fore, Back, Style, init
 init(autoreset=True)
 
 
-# display staring menu
-def start():
-    print(Fore.CYAN + Style.BRIGHT + f"\n\n\t\tHello and welcome {name}\n\n"
-          "\tYou must collect all seven Dragon Balls\n\n"
-          "Moves: \tgo {direction} (travel north, south, east or west)\n"
-          "\t collect: (add Dragon Ball to your inventory)\n\n ")
+# display greeting
+def start(player):
+    print(Fore.CYAN + Style.BRIGHT + f"\n\n\t\tHello and welcome {player.name}\n\n"
+        "\tYou must collect all seven Dragon Balls\n\n"
+        "-> Moves: \ttravel north, south, east or west\n"
+        "-> Collect: \tadd Dragon Ball to your inventory\n\n"
+        + Fore.RED +f" \t\tYou have 3 lives left \n\n") 
     input("Press enter to continue.....")
     clear()
 
@@ -53,36 +55,58 @@ def win():
     if len(player.items) == 7:
         clear()
         print(Style.BRIGHT + Fore.YELLOW + "\n\n\t\tCongratulation! You won - let make a wish")
+        exit()
         return True
     else:
         return False
 
-# check lose game
-def lose():
-    if player.life <= 0:
+# check HP
+def HP():
+    if player.hp <= 0:
+        # return starting location
+        player.location = player.start_room
+        # minus player life
+        player.life = player.life - 1
+        # reset player HP
+        player.hp = 10
+        if len(player.items)>0:
+            for i in player.items:
+                player.hp += i.weight 
         clear()
-        print(Style.BRIGHT + Fore.RED + "\n\n\t\tGame over")
+        print(Style.BRIGHT + Fore.LIGHTRED_EX + "\n\n\t\tYou are out of HP\n\n")
+        if player.life == 2:
+            print(Style.BRIGHT + Fore.RED + "\t\tYou have 2 lives left\n\n")
+            input("Press enter to play again!.....")
+        elif player.life == 1:
+            print(Style.BRIGHT + Fore.RED + "\t\tYou have 1 life left\n\n")
+            input("Press enter to play again!.....")
+        elif player.life == 0:
+            input("Press enter to continue!.....")
         return True
     else: 
         return False
 
-# main code
-name = input("What is your name? ")
-age = int(input("How old are you? "))
-if age < 12:
-    clear()
-    print("You do not meet the minimum age requirement")
-else:
-    clear()
-    start()
+# check lose
+def lose():
+    if player.life <= 0:
+        clear()
+        print(Style.BRIGHT + Fore.RED + "\n\n\t\tGAME OVER")
+        return True
+    else:
+        return False
+
+
+
+# create item, room & player
+def create_world():
     # create item
-    item_1 = Item("Dradon Ball number 1",2)
-    item_2 = Item("Dradon Ball number 2",5)
-    item_3 = Item("Dradon Ball number 3",2)
-    item_4 = Item("Dradon Ball number 4",4)
-    item_5 = Item("Dradon Ball number 5",3)
-    item_6 = Item("Dradon Ball number 6",3)
-    item_7 = Item("Dradon Ball number 7",2)
+    item_1 = Item("Dragon Ball number 1",1)
+    item_2 = Item("Dragon Ball number 2",4)
+    item_3 = Item("Dragon Ball number 3",1)
+    item_4 = Item("Dragon Ball number 4",3)
+    item_5 = Item("Dragon Ball number 5",2)
+    item_6 = Item("Dragon Ball number 6",2)
+    item_7 = Item("Dragon Ball number 7",1)
     # create rooms
     room_1 = Room("Kame House")
     room_2 = Room("Frypan Mountain")
@@ -117,15 +141,60 @@ else:
     room_14.add_direction("east",room_12,"south",room_15)
     room_15.add_direction("north",room_14,"east",room_10,"south",room_16)
     room_16.add_direction("north",room_15)
-    # Create player
-    player = Player(name,room_1)
+    # room dict:
+    rooms = {}
+    for room in [room_1,room_2,room_3,room_4,room_5,room_6,room_7,room_8,room_9,room_10,room_11,room_12,room_13,room_14,room_15,room_16]:
+        rooms[room.name] = room
+    return rooms
+# load / save game
+def main():
+    while True:
+        clear()
+        set_up = input("--------------------------\n1. Load game \n2. New game\n")
+        if set_up == "1":
+            rooms = create_world()
+            player = load_game(rooms)
+            if player:
+                print("Welcome back" + Fore.LIGHTBLUE_EX +  f"{player.name}")
+                return player, rooms
+            else:
+                clear()
+                print(Fore.RED+"\nNo save data found")
+                input("Press enter to continue!.....")
+        elif set_up == "2":
+            clear()
+            name = input("What is your name? ")
+            age = input("How old are you? ")
+            if name == "" or age == "":
+                print(Fore.RED + "\nPlease enter your name and age")
+                input("Press enter to continue!.....")
+            elif int(age) < 12:
+                clear()
+                print(Fore.RED + Style.BRIGHT + "\nYou do not meet the minimum age requirement")
+                input("Press enter to continue!.....")
+            else:
+                clear()
+                rooms = create_world()
+                player = Player(name, rooms["Kame House"])
+                start(player)
+                return player, rooms    
+        else:
+            print(Fore.RED + "Invalid command")
 
+# main code
+player, rooms = main()
+while True:
+    # check lose
+    if lose():
+        break
     # main game loop
     while True:
-        # check win lose
+        clear()
+        # check win 
         if win():
             break
-        if lose():
+        # check HP
+        if HP():
             break
         # main menu
         print("--------------------------")
@@ -133,13 +202,10 @@ else:
         print("Current location:" + Fore.LIGHTBLUE_EX + f"{player.location.name}")
         show_inventory()
         show_item()
-        print(f"Your life:" + Fore.RED + f" {player.life}")
-        print("--------------------------\n1. Collect \t2. Go North \n3. Go South \t4. Go West \n5. Go East \t6. Quit ")
+        print(f"Your HP:" + Fore.RED + f" {player.hp}")
+        print("--------------------------\n1. Collect \t2. Go North \t7. Save Game \n3. Go South \t4. Go West \n5. Go East \t6. Quit ")
         command = input("Enter a command (1-6): ")
-        if command == "lopeta":
-            print("Bye bye")
-            break
-        elif command == "1":
+        if command == "1":
             clear()
             player.collect_item()
             clear()
@@ -150,11 +216,20 @@ else:
         elif command == "4":
             move("west")
         elif command == "5":
-             move("east")
+            move("east")
         elif command == "6":
             clear()
-            print("Enter lopeta in command")
+            command = input("Enter lopeta in command: \n")
+            if command == "lopeta":
+                print("Bye bye")
+                exit()
+            else: 
+                input("Invalid command")
+        elif command == "7":
+            save_game(player, rooms)
+            input("Press enter to continue!.....")
         else:
             clear()
             print(Fore.RED + "Invalid command")
-
+            input("Press enter to continue!.....")
+                

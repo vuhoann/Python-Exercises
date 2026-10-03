@@ -3,4 +3,4 @@ class Item:
         self.name = name
         self.weight = weight
     def __str__(self):
-        return (f"- {self.name} ({self.weight} life)")
+        return (f"- {self.name} ({self.weight} HP points)")
