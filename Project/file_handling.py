@@ -5,6 +5,9 @@ import os
 import json
 #  create json file
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "save.json")
+# clear terminal
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
 
 def items_to_list(items):
     result = []
@@ -41,8 +44,10 @@ def save_game(player, rooms):
     try:
         with open(SAVE_FILE,"w") as file:
             json.dump(save_data, file)
+        clear()
         print("Game is saved")
     except IOError:
+        clear()
         print("Can not save the game")
 
 def load_game(rooms):

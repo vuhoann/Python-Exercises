@@ -155,7 +155,8 @@ def main():
             rooms = create_world()
             player = load_game(rooms)
             if player:
-                print("Welcome back" + Fore.LIGHTBLUE_EX +  f"{player.name}")
+                print("Welcome back" + Fore.LIGHTBLUE_EX +  f" {player.name}")
+                input("Press enter to continue!.....")
                 return player, rooms
             else:
                 clear()
