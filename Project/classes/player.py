@@ -15,16 +15,18 @@ class Player:
 
     def move(self,room):
         self.location = room
-        hp = random.randint(-3,1)
+        list_character=["Piccolo", "Cell", "Frieza", "Android 17", "Vegeta","Majin Buu", "Bulma", "Chi-Chi"]
+        character = random.choice(list_character)
+        if character == "Piccolo" or character == "Android 17":
+            hp = -1
+        elif character == "Vegeta" or character == "Frieza":
+            hp = -2
+        elif character == "Cell" or character == "Majin Buu":
+            hp = -3
+        elif character == "Bulma" or character == "Chi-Chi":
+            hp = 1
         self.hp = self.hp + hp
-        if hp == -2:
-            print(Fore.LIGHTRED_EX + "You encounter an enemy: your HP - 2")
-        elif hp == -1:
-            print(Fore.LIGHTRED_EX + "You encounter an obstacle: your HP - 1")
-        elif hp == 1:
-            print(Fore.LIGHTGREEN_EX + "You find some food: your HP + 1")
-        elif hp == -3:
-            print(Fore.LIGHTRED_EX + "You encounter a powerful enemy: your HP - 3")
+        print(Fore.LIGHTCYAN_EX + f"You encounter {character}: your HP plus {hp}")
 
     def collect_item(self):
         if self.location.item != "":

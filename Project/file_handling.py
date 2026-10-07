@@ -5,9 +5,44 @@ import os
 import json
 #  create json file
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "save.json")
+INTRO_TEXT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "intro.txt")
+INSTRUCTION_TEXT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "instruction.txt")
+MAP_TEXT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "maps.txt")
 # clear terminal
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
+
+def print_map():
+    try:
+        with open(MAP_TEXT, "r") as file:
+            data = file.read()
+            return data
+    except FileNotFoundError:
+        print("File not found")
+    except IOError:
+        print("Error occurred while handling the file")
+
+def print_intro():
+    try:
+        with open(INTRO_TEXT, "r") as file:
+            data = file.read()
+            return data
+    except FileNotFoundError:
+        print("File not found")
+    except IOError:
+        print("Error occurred while handling the file")
+
+
+def print_instruction():
+    try:
+        with open(INSTRUCTION_TEXT, "r") as file:
+            data = file.read()
+            return data
+    except FileNotFoundError:
+        print("File not found")
+    except IOError:
+        print("Error occurred while handling the file")
+
 
 def items_to_list(items):
     result = []

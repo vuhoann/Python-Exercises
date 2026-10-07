@@ -1,0 +1,8 @@
+HOW TO PLAY:
+Moves:      travel north, south, east or west
+Collect:    add Dragon Ball to your inventory  
+Map:        you can pay 2 HP to see the map
+   
+Every move can change your HP.
+If your HP reaches 0, you lose 1 life and return the start.
+Good luck and have fun!
